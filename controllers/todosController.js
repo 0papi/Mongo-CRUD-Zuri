@@ -1,6 +1,7 @@
 const Todo = require("../models/todo");
 
 // get all todos
+// /todos
 const getTodos = async (req, res) => {
   const todos = await Todo.find();
   if (!todos) {
@@ -12,6 +13,7 @@ const getTodos = async (req, res) => {
 };
 
 // get single todo
+// /todos/:id
 const getSingleTodo = async (req, res) => {
   const { id } = req.params;
   const todo = await Todo.findById(id);
@@ -25,6 +27,7 @@ const getSingleTodo = async (req, res) => {
 };
 
 // create new Todo
+// /todos
 const createNewTodo = async (req, res) => {
   const { title, description } = req.body;
   if (!title || !description) {
@@ -38,6 +41,8 @@ const createNewTodo = async (req, res) => {
   }
 };
 
+// update todo
+// /todos/:id
 const updateTodo = async (req, res) => {
   const { id } = req.params;
 
@@ -45,7 +50,7 @@ const updateTodo = async (req, res) => {
     res.status(400);
     throw new Error("No ID has been provided");
   }
-  if (!title || !description) {
+  if (!req.body) {
     res.status(400);
     throw new Error("Please provide all fields");
   }
@@ -57,6 +62,7 @@ const updateTodo = async (req, res) => {
 };
 
 // delete todo
+// /todos/:id
 const deleteTodo = async (req, res) => {
   const { id } = req.params;
   const todo = await Todo.findByIdAndDelete(id);
